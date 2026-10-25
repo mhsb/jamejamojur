@@ -1,0 +1,47 @@
+<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>اطلس جهان برای کنجکاوها</title>
+<style>@font-face{font-family:V;src:url(../../assets/fonts/vazirmatn-subset.woff2) format('woff2');font-weight:100 900}
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;font-family:V,Tahoma,'Segoe UI',sans-serif;color:#1d3557;background:#cfe8f1}
+#fl{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:none}
+header{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:8px 14px;background:#fffdf8f2;box-shadow:0 2px 10px #0003}
+h1{font-size:21px;margin:0;font-weight:800;color:#d9502b}
+button,input{font:inherit;color:inherit}
+.chip{border:1.5px solid #1d355733;background:#fff;border-radius:99px;padding:3px 11px;cursor:pointer;font-size:13px}.chip:hover{background:#fff1e6}
+.chip i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-inline-end:5px;vertical-align:-1px}
+.seg{display:flex;border:1.5px solid #1d3557;border-radius:99px;overflow:hidden}.seg button{border:0;background:#fff;padding:3px 12px;cursor:pointer;font-size:13px}.seg .on{background:#1d3557;color:#fff}
+label{font-size:13px;cursor:pointer;white-space:nowrap}
+#q{border:1.5px solid #1d355755;border-radius:99px;padding:4px 14px;width:190px;font-size:14px}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:none;cursor:grab;touch-action:none;background:radial-gradient(circle at 40% 45%,#16304f,#07111f)}
+#res{position:absolute;top:100%;background:#fff;border-radius:10px;box-shadow:0 4px 14px #0003;min-width:220px;overflow:hidden}#res div{padding:6px 14px;cursor:pointer;font-size:14px}#res div:hover{background:#fff1e6}#res small{opacity:.55;margin-inline-start:8px}
+#panel{position:absolute;right:12px;z-index:4;top:70px;inset-inline-start:12px;width:316px;max-height:calc(100% - 86px);overflow:auto;background:#fffdf8;border-radius:16px;padding:16px;box-shadow:0 6px 24px #0004;line-height:1.7}
+#panel h2{margin:0;font-size:24px;font-weight:800}#panel h3{margin:14px 0 4px;font-size:14px;color:#d9502b;border-bottom:2px solid #d9502b33}
+.hd{display:flex;gap:12px;align-items:center;margin-bottom:8px}.fl{width:72px;flex:none;border-radius:6px;overflow:hidden;box-shadow:0 0 0 1px #0003;line-height:0}.fl svg{width:100%;height:auto}
+.r{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px dashed #1d355726;font-size:14px}.r b{font-weight:600;text-align:left}
+.big{width:100%;margin-top:12px;background:#d9502b;color:#fff;border:0;border-radius:10px;padding:8px;cursor:pointer;font-weight:600}
+#zm{position:absolute;left:12px;bottom:14px;z-index:4;display:flex;flex-direction:column;gap:6px}#zm button{width:38px;height:38px;border-radius:10px;border:0;background:#fffdf8;font-size:20px;cursor:pointer;box-shadow:0 2px 8px #0003}
+#tip{position:fixed;z-index:9;pointer-events:none;background:#1d3557;color:#fff;border-radius:8px;padding:2px 10px;font-size:13px;display:none}
+#cG path{stroke:#fff;stroke-width:.7;vector-effect:non-scaling-stroke;cursor:pointer}#cG path:hover{filter:brightness(1.08)}#cG path.sel{stroke:#1d3557;stroke-width:2.2}
+.lk{fill:#cfe8f1;stroke:#8fc1da;stroke-width:.6;vector-effect:non-scaling-stroke}.rv{fill:none;stroke:#62aed6;stroke-width:1;vector-effect:non-scaling-stroke}
+.l text{font-size:12px;font-weight:600;fill:#1d3557;text-anchor:middle;dominant-baseline:central;paint-order:stroke;stroke:#fff;stroke-opacity:.85;stroke-width:3px;stroke-linejoin:round;pointer-events:none}
+.l.t text,.l.k text{text-anchor:start;font-size:11.5px;font-weight:500}.l.t{cursor:pointer}.l.t circle{fill:#fff;stroke:#1d3557;stroke-width:1.5}.l.t.cap circle{fill:#d9502b}
+.l.m text,.l.r text,.l.l text{fill:#2a7aa6;font-style:italic;stroke:#cfe8f1}.l.r text{stroke:#fff}.l.k{cursor:help}.l.k path{fill:#8b5a2b;stroke:#fff;stroke-width:1}.l.k text{fill:#6b4423;font-size:11px;pointer-events:auto}.l.p text{fill:#7a4b1e;font-size:11px}
+
+*{-webkit-tap-highlight-color:transparent}a.chip{text-decoration:none;color:inherit}
+#gear,.x{display:none}#hint{display:none}
+@media(max-width:760px){
+ header{padding:6px 10px;gap:6px 8px}h1{font-size:17px}#gear{display:inline-block}
+ #lyr{display:none;width:100%;order:10;background:#fff;border-radius:12px;padding:6px 12px;line-height:2.1}header.open #lyr{display:block}header:not(.open) #ch,header a[href="atlas-iran.html"]{display:none}
+ #ch{order:8;width:100%;overflow-x:auto;white-space:nowrap;display:flex;gap:6px}#q{flex:1;min-width:110px}.seg button{padding:3px 10px}
+ #panel{top:auto;bottom:0;left:0;right:0;inset-inline-start:0;width:auto;max-height:46vh;border-radius:18px 18px 0 0;padding:16px 16px 22px}
+ #panel.empty{display:none}#panel:not(.empty)~#hint{display:none}
+ #hint{display:block;position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:#1d3557d9;color:#fff;padding:6px 16px;border-radius:99px;font-size:13px;z-index:4;pointer-events:none;white-space:nowrap}
+ .x{display:block;position:absolute;top:10px;left:12px;border:0;background:#0001;border-radius:50%;width:32px;height:32px;font-size:15px;cursor:pointer}
+ #zm{bottom:auto;top:50%;transform:translateY(-50%)}#zm button{width:42px;height:42px}
+}
+</style></head><body>
+<header><h1>🌍 اطلس جهان</h1><a class="chip" href="#" data-go="iran" style="text-decoration:none;color:inherit">🇮🇷 اطلس دقیق ایران</a><button class="chip" id="mode">🌐 نمایش کره</button><a class="chip" href="#" data-go="countries">🃏 کارت‌ها</a><button class="chip" id="gear">⚙️</button><div class="seg" id="lv"><button data-v="simple" class="on">ساده</button><button data-v="adv">پیشرفته</button></div>
+<div style="position:relative"><input id="q" placeholder="جستجوی کشور یا شهر…" autocomplete="off"><div id="res"></div></div><div id="ch"></div>
+<span id="lyr"><label><input type="checkbox" data-l="names" checked> کشورها</label> <label><input type="checkbox" data-l="cities" checked> شهرها</label> <label><input type="checkbox" data-l="nature" checked> دریاها و ناهمواری‌ها</label> <label><input type="checkbox" data-l="water" checked> رودها</label></span></header>
+<canvas id="gl"></canvas><canvas id="fl"></canvas>
+<div id="panel"></div><div id="hint">روی یک کشور یا شهر بزنید ☝️</div><div id="zm"><button id="zi">+</button><button id="zo">−</button><button id="zr" title="کل جهان">⌂</button></div><div id="tip"></div>
+<script src="../../assets/lib/d3.min.js"></script>
+<script src="data.js"></script><script src="../../assets/js/bridge.js"></script><script src="app.js"></script></body></html>

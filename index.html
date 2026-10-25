@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>جام جمع و جور</title>
+<meta name="description" content="اطلس جهان و ایران، کارت کشورها، گنبد آسمان و منظومهٔ شمسی سه‌بعدی؛ در یک برنامهٔ آفلاین">
+<meta name="theme-color" content="#0a0f1f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="جام جمع و جور">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/css/shell.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-sky" viewBox="0 0 24 24"><path d="M3 18h18M6.5 18a5.5 5.5 0 0 1 11 0M12 6v2.5M4.6 9.6l1.7 1.7M19.4 9.6l-1.7 1.7"/></symbol>
+  <symbol id="i-solar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="3.8" transform="rotate(-22 12 12)"/></symbol>
+  <symbol id="i-atlas" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.2 3 3.2 15 0 18M12 3c-3.2 3-3.2 15 0 18"/></symbol>
+  <symbol id="i-iran" viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14"/></symbol>
+  <symbol id="i-cards" viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="14" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v12"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+</svg>
+
+<div id="app">
+  <nav id="nav" aria-label="بخش‌های برنامه">
+    <img class="logo" src="assets/icons/icon.svg" alt="" width="40" height="40">
+    <button data-m="sky" title="گنبد آسمان"><svg><use href="#i-sky"/></svg><span>آسمان</span></button>
+    <button data-m="solar" title="منظومهٔ شمسی سه‌بعدی"><svg><use href="#i-solar"/></svg><span>منظومه</span></button>
+    <button data-m="atlas" title="اطلس جهان"><svg><use href="#i-atlas"/></svg><span>جهان</span></button>
+    <button data-m="iran" title="اطلس ایران"><svg><use href="#i-iran"/></svg><span>ایران</span></button>
+    <button data-m="countries" title="کارت کشورها"><svg><use href="#i-cards"/></svg><span>کشورها</span></button>
+    <i class="sp"></i>
+    <button id="bPlace" title="مکان فعلی"><svg><use href="#i-pin"/></svg><span id="pName">مکان</span></button>
+    <button id="bAbout" title="دربارهٔ برنامه"><svg><use href="#i-info"/></svg><span>درباره</span></button>
+  </nav>
+  <main id="stage">
+    <div id="boot"><img src="assets/icons/icon.svg" alt="" width="84" height="84"><b>زمین و آسمان</b><small>در حال بارگذاری…</small></div>
+  </main>
+</div>
+
+<div id="sheet" role="dialog" aria-label="مکان" aria-modal="true">
+  <div class="bd"></div>
+  <div class="box">
+    <h2>📍 مکان فعلی</h2>
+    <div id="cur"></div>
+    <div class="row" id="goRow">
+      <button data-g="sky">🌌 آسمان</button><button data-g="solar">🪐 منظومه</button><button data-g="atlas">🗺️ نقشه</button>
+    </div>
+    <p class="note">مکان بین همهٔ بخش‌ها مشترک است؛ با تغییر آن، آسمان، نشانگر زمین در منظومه و نقشه هماهنگ می‌شوند.</p>
+    <div class="srch"><input id="q" type="search" placeholder="جستجوی شهر یا کشور…" autocomplete="off" enterkeyhint="search"><button id="gps" title="موقعیت من">🎯</button></div>
+    <div id="res"></div>
+  </div>
+</div>
+
+<dialog id="about" aria-labelledby="abT">
+  <form method="dialog"><button class="x" aria-label="بستن">✕</button></form>
+  <div class="ab">
+    <img src="assets/icons/icon.svg" alt="" width="72" height="72">
+    <h2 id="abT">زمین و آسمان</h2>
+    <p class="dim">نسخهٔ <bdi dir="ltr">1.0.0</bdi></p>
+    <p>مجموعه‌ای آموزشی و آفلاین برای شناخت زمین، کشورها و آسمان؛ پنج بخش که با هم در ارتباطند:</p>
+    <ul>
+      <li><b>گنبد آسمان</b>؛ آسمان بالای هر شهر، در هر ساعت و روز سال</li>
+      <li><b>منظومهٔ شمسی</b>؛ مدل سه‌بعدی و فصل‌ها، با نشانگر مکان روی زمین</li>
+      <li><b>اطلس جهان</b> و <b>اطلس ایران</b>؛ نقشهٔ تخت و کره، شهرها و فاصله‌ها</li>
+      <li><b>کارت کشورها</b>؛ اطلاعات کشورها در قالب کارت</li>
+    </ul>
+    <p>هر شهر یا کشوری را که انتخاب کنید، از همان‌جا می‌توانید آسمانش را ببینید، جایش را روی زمین در منظومه پیدا کنید یا روی نقشه بروید.</p>
+    <div class="by">
+      <span class="dim">سازنده</span>
+      <b>حسین شیبه</b>
+      <a href="https://sheibah.ir" target="_blank" rel="noopener">sheibah.ir</a>
+    </div>
+    <div id="offSt" class="st">…</div>
+    <button id="install" hidden>⬇️ نصب برنامه روی دستگاه</button>
+    <p class="iosnote" id="iosNote" hidden>در iPhone و iPad: دکمهٔ اشتراک‌گذاری ← «Add to Home Screen».</p>
+    <p class="small dim">ساخته‌شده با Three.js (MIT)، D3.js (ISC) و فونت وزیرمتن (OFL). داده‌ها و مدل‌ها برای آموزش ساده‌سازی شده‌اند و تقریبی‌اند.</p>
+  </div>
+</dialog>
+<div id="toast" role="status" hidden></div>
+<noscript><p style="padding:2rem;color:#fff">برای اجرای این برنامه جاوااسکریپت لازم است.</p></noscript>
+<script src="assets/js/shell.js"></script>
+</body>
+</html>

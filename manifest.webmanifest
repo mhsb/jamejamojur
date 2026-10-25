@@ -1,0 +1,24 @@
+{
+  "name": "جام جمع و جور",
+  "short_name": "جام جمع و جور",
+  "description": "اطلس جهان و ایران، کارت کشورها، گنبد آسمان و منظومهٔ شمسی سه‌بعدی؛ در یک برنامهٔ آفلاین",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a0f1f",
+  "theme_color": "#0a0f1f",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "shortcuts": [
+    { "name": "گنبد آسمان", "url": "./#/sky" },
+    { "name": "منظومهٔ شمسی", "url": "./#/solar" },
+    { "name": "اطلس جهان", "url": "./#/atlas" }
+  ]
+}

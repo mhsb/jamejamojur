@@ -1,0 +1,53 @@
+<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>اطلس ایران</title>
+<style>@font-face{font-family:V;src:url(../../assets/fonts/vazirmatn-subset.woff2) format('woff2');font-weight:100 900}
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;font-family:V,Tahoma,'Segoe UI',sans-serif;color:#1d3557;background:#cfe8f1}
+#fl{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:none}
+header{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:8px 14px;background:#fffdf8f2;box-shadow:0 2px 10px #0003}
+h1{font-size:21px;margin:0;font-weight:800;color:#0b7a4b;display:flex;gap:8px;align-items:center}h1 .f{width:30px;line-height:0;border-radius:4px;overflow:hidden;box-shadow:0 0 0 1px #0003}h1 .f svg{width:100%;height:auto}
+button,input,select{font:inherit;color:inherit}
+.chip{border:1.5px solid #1d355733;background:#fff;border-radius:99px;padding:3px 12px;cursor:pointer;font-size:13px;text-decoration:none;color:inherit}.chip:hover{background:#e8f6ee}
+.seg{display:flex;border:1.5px solid #1d3557;border-radius:99px;overflow:hidden}.seg button{border:0;background:#fff;padding:3px 14px;cursor:pointer;font-size:13px}.seg .on{background:#1d3557;color:#fff}
+label{font-size:13px;cursor:pointer;white-space:nowrap}
+#q{border:1.5px solid #1d355755;border-radius:99px;padding:4px 14px;width:180px;font-size:14px}
+#res{position:absolute;top:100%;background:#fff;border-radius:10px;box-shadow:0 4px 14px #0003;min-width:220px;overflow:hidden}#res div{padding:6px 14px;cursor:pointer;font-size:14px}#res div:hover{background:#e8f6ee}#res small{opacity:.55;margin-inline-start:8px}
+#panel{position:absolute;right:12px;z-index:4;top:70px;inset-inline-start:12px;width:316px;max-height:calc(100% - 86px);overflow:auto;background:#fffdf8;border-radius:16px;padding:16px;box-shadow:0 6px 24px #0004;line-height:1.7}
+#panel h2{margin:0;font-size:24px;font-weight:800}#panel h3{margin:14px 0 4px;font-size:14px;color:#0b7a4b;border-bottom:2px solid #0b7a4b33}
+.r{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px dashed #1d355726;font-size:14px}.r b{font-weight:600;text-align:left}
+.big{width:100%;margin-top:12px;background:#0b7a4b;color:#fff;border:0;border-radius:10px;padding:8px;cursor:pointer;font-weight:600}
+select{width:100%;margin:4px 0;padding:6px;border-radius:8px;border:1.5px solid #1d355755;background:#fff}
+.note{font-size:12px;opacity:.7;margin-top:8px}.res{font-size:15px;margin-top:8px}
+#zm{position:absolute;left:12px;bottom:14px;z-index:4;display:flex;flex-direction:column;gap:6px}#zm button{width:38px;height:38px;border-radius:10px;border:0;background:#fffdf8;font-size:20px;cursor:pointer;box-shadow:0 2px 8px #0003}
+#tip{position:fixed;z-index:9;pointer-events:none;background:#1d3557;color:#fff;border-radius:8px;padding:2px 10px;font-size:13px;display:none}
+.nb{fill:#efe9dc;fill-opacity:.8;stroke:#a89f8a;stroke-width:.8;vector-effect:non-scaling-stroke}
+#pG path{stroke:#fff;stroke-width:1;vector-effect:non-scaling-stroke;cursor:pointer;fill-opacity:.6}#pG path:hover{fill-opacity:.85}#pG path.sel{stroke:#1d3557;stroke-width:2.4}
+.nat #pG path{fill-opacity:0;stroke:#5b3a1e;stroke-dasharray:5 3;stroke-width:1.1}.nat #pG path:hover{fill-opacity:.15}.nat .nb{fill-opacity:0}.pol #rl{opacity:.5}
+.lk{fill:#a9d4e8;stroke:#6fb0cf;stroke-width:.7;vector-effect:non-scaling-stroke;pointer-events:none}.rv{fill:none;stroke:#4f9cc8;stroke-width:1;vector-effect:non-scaling-stroke;pointer-events:none}
+.rd{fill:none;stroke:#c0392b;stroke-width:1.6;stroke-opacity:.8;vector-effect:non-scaling-stroke;pointer-events:none}
+.rt{fill:none;stroke:#d9502b;stroke-width:3.5;stroke-dasharray:7 5;vector-effect:non-scaling-stroke;pointer-events:none}
+.l text{font-size:12px;font-weight:600;fill:#1d3557;text-anchor:middle;dominant-baseline:central;paint-order:stroke;stroke:#fff;stroke-opacity:.85;stroke-width:3px;stroke-linejoin:round;pointer-events:none}
+.l.pr text{font-size:14px;font-weight:800;fill:#0b5e3a;stroke-opacity:.7}.l.c text{fill:#8a7f68;font-size:13px}
+.l.t text,.l.k text{text-anchor:start;font-size:11.5px;font-weight:500}.l.t,.l.k{cursor:pointer}.l.t circle{fill:#fff;stroke:#1d3557;stroke-width:1.5}.l.t.pc circle{fill:#0b7a4b}.l.t.cap circle{fill:#d9502b}
+.l.m text,.l.r text,.l.l text{fill:#1f6f9c;font-style:italic}.l.p text{fill:#6d3f14;font-size:12px}.l.k path{fill:#8b5a2b;stroke:#fff;stroke-width:1}.l.k text{fill:#6b4423;font-size:11px}
+
+*{-webkit-tap-highlight-color:transparent}a.chip{text-decoration:none;color:inherit}
+#gear,.x{display:none}#hint{display:none}
+@media(max-width:760px){
+ header{padding:6px 10px;gap:6px 8px}h1{font-size:17px}#gear{display:inline-block}
+ #lyr{display:none;width:100%;order:10;background:#fff;border-radius:12px;padding:6px 12px;line-height:2.1}header.open #lyr{display:block}header:not(.open) #ch,header a[href="atlas-iran.html"]{display:none}
+ #ch{order:8;width:100%;overflow-x:auto;white-space:nowrap;display:flex;gap:6px}#q{flex:1;min-width:110px}.seg button{padding:3px 10px}
+ #panel{top:auto;bottom:0;left:0;right:0;inset-inline-start:0;width:auto;max-height:46vh;border-radius:18px 18px 0 0;padding:16px 16px 22px}
+ #panel.empty{display:none}#panel:not(.empty)~#hint{display:none}
+ #hint{display:block;position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:#1d3557d9;color:#fff;padding:6px 16px;border-radius:99px;font-size:13px;z-index:4;pointer-events:none;white-space:nowrap}
+ .x{display:block;position:absolute;top:10px;left:12px;border:0;background:#0001;border-radius:50%;width:32px;height:32px;font-size:15px;cursor:pointer}
+ #zm{bottom:auto;top:50%;transform:translateY(-50%)}#zm button{width:42px;height:42px}
+}
+</style></head><body>
+<header><h1><span class="f"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 513 342"><path fill="#FFF" d="M0 0h512v342H0z"/><path fill="#6DA544" d="M0 0h513v114H0z"/><g fill="#D80027"><path d="M0 227.9h513v114H0zM278.8 134.8c.1 2 8.7 26.2 4.4 39.4-6.6 20.3-15.8 21.8-19.8 24.5V134l-6.9-4.2-6.9 4.2v64.7c-4-2.7-12.4-2.4-19.8-24.5-4.3-12.7 5.7-37.3 5.8-39.2 0 0-9.5 8.1-15.8 24-5.9 14.8 1.9 49.6 29.5 54.8 2.3.4 4.7 5.6 7.2 5.6 2.1 0 4.1-5.2 6-5.5 28.4-4.6 35-41.7 29.9-55.6-5.4-14.6-13.6-23.5-13.6-23.5z"/></g><g fill="#FFF" opacity=".5"><path d="M44.6 98.9h22.3v24.4H44.6zM0 98.9h22.3v24.4H0zM89.2 98.9h22.3v24.4H89.2zM133.8 98.9h22.3v24.4h-22.3zM178.4 98.9h22.3v24.4h-22.3zM223 98.9h22.3v24.4H223zM267.7 98.9H290v24.4h-22.3zM312.3 98.9h22.3v24.4h-22.3zM356.9 98.9h22.3v24.4h-22.3zM401.5 98.9h22.3v24.4h-22.3zM446.1 98.9h22.3v24.4h-22.3zM490.7 98.9H513v24.4h-22.3zM44.6 216.9h22.3v25.5H44.6zM0 216.9h22.3v25.5H0zM89.2 216.9h22.3v25.5H89.2zM133.8 216.9h22.3v25.5h-22.3zM178.4 216.9h22.3v25.5h-22.3zM223 216.9h22.3v25.5H223zM267.7 216.9H290v25.5h-22.3zM312.3 216.9h22.3v25.5h-22.3zM356.9 216.9h22.3v25.5h-22.3zM401.5 216.9h22.3v25.5h-22.3zM446.1 216.9h22.3v25.5h-22.3zM490.7 216.9H513v25.5h-22.3z"/></g></svg></span>اطلس ایران</h1><a class="chip" href="#" data-go="atlas">🌍 اطلس جهان</a>
+<div class="seg" id="md"><button data-v="pol" class="on">استان‌ها</button><button data-v="nat">طبیعی</button></div>
+<a class="chip" href="#" data-go="countries">🃏 کارت‌ها</a><button class="chip" id="gear">⚙️</button><button class="chip" id="dist">📏 فاصله‌ی شهرها</button>
+<div style="position:relative"><input id="q" placeholder="جستجوی استان یا شهر…" autocomplete="off"><div id="res"></div></div>
+<span id="lyr"><label><input type="checkbox" data-l="cities" checked> شهرها</label> <label><input type="checkbox" data-l="roads" checked> مسیرهای اصلی</label> <label><input type="checkbox" data-l="water" checked> رودها و دریاچه‌ها</label> <label><input type="checkbox" data-l="labels" checked> نام‌ها</label></span></header>
+<canvas id="fl"></canvas>
+<div id="panel"></div><div id="hint">روی یک استان یا شهر بزنید ☝️</div><div id="zm"><button id="zi">+</button><button id="zo">−</button><button id="zr" title="کل ایران">⌂</button></div><div id="tip"></div>
+<script src="../../assets/lib/d3.min.js"></script>
+<script src="data.js"></script><script src="../../assets/js/bridge.js"></script><script src="app.js"></script></body></html>

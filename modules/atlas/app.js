@@ -28,7 +28,7 @@ function lblOn(l,k,sz){
  return (l.ty==='r'||l.ty==='l'?layers.water:layers.nature)&&k>=Math.max(1.2,2**(l.mz-2.2))&&(level==='adv'||l.mz<=3.5)}
 function layout(k,pos,sz){
  const bx=[],out=[];
- for(const l of L){const p=pos(l);if(!p)continue;const[x,y]=p;
+ for(const l of L){if(!l.t)continue;const p=pos(l);if(!p)continue;const[x,y]=p;
   if(x<-60||x>W+60||y<HT+6||y>H+20||!lblOn(l,k,sz(l)))continue;
   const dot=l.ty==='t'||l.ty==='k',w=l.t.length*7.5+(dot?14:0),x0=dot?x-5:x-w/2,y0=y-8;
   if(bx.some(b=>x0<b[2]&&x0+w>b[0]&&y0<b[3]&&y0+16>b[1]))continue;
@@ -160,3 +160,4 @@ if(window.Bridge)Bridge.on('ctx',m=>{if(m.cause==='sync')return;
  if(c)return pickCity(c);
  sel=null;panel();sched();
  if(globe)gFly(p.lo,p.la,6);else{const[x,y]=proj([p.lo,p.la]);zoomPx([[x-30,y-20],[x+30,y+20]],9)}});
+new ResizeObserver(()=>document.documentElement.style.setProperty('--ph',$('#panel').offsetHeight+'px')).observe($('#panel'));

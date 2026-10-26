@@ -30,6 +30,8 @@ button{font:inherit;font-size:13px;color:var(--text);background:rgba(94,194,255,
 button:hover{background:rgba(94,194,255,.25)}
 button[aria-pressed="true"],button.on{background:var(--sky);color:#04122a;border-color:var(--sky);font-weight:700}
 button:focus-visible,input:focus-visible{outline:2px solid var(--sun);outline-offset:2px}
+#top{display:flex;gap:6px;align-items:center;width:100%}#top #chips{width:auto;flex:1;min-width:0}#mt{display:none;flex:none;margin-top:16px}#more{display:contents}
+@media(max-width:700px){#mt{display:block}#bar:not(.open) #more{display:none}#bar{max-height:42vh}}
 </style>
 </head>
 <body>
@@ -46,7 +48,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--sun);outline-of
 </div>
 <button id="tg" aria-pressed="true">کنترل‌ها</button>
 <div id="bar">
-  <div id="chips"></div>
+  <div id="top"><button id="mt">⚙️ کنترل‌ها ▴</button><div id="chips"></div></div>
+  <div id="more">
   <div class="grp" style="flex:1 1 100%">
     <label class="sl">ساعت روز <b id="hl"></b><input id="hr" dir="ltr" type="range" min="0" max="24" step="0.05"></label>
     <label class="sl">روز سال (از اول فروردین) <b id="dl"></b><input id="dy" dir="ltr" type="range" min="0" max="364" step="1"></label>
@@ -55,6 +58,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--sun);outline-of
   <div class="grp"><span>برو به</span><button data-q="0">بهار</button><button data-q="1">تابستان</button><button data-q="2">پاییز</button><button data-q="3">زمستان</button></div>
   <div class="grp"><button id="vSide">از کنار</button><button id="tAxis" aria-pressed="false">محور زمین</button><button id="tOrb" aria-pressed="true">مدارها</button><button id="tIran" aria-pressed="false">نشانگر مکان</button></div>
   <div class="grp"><button id="toSky">🌅 آسمان از این نقطه</button><button id="toMap">🗺️ روی نقشه</button></div>
+  </div>
 </div>
 <script src="../../assets/lib/three.min.js"></script>
 <script src="../../assets/js/bridge.js"></script><script src="app.js"></script>

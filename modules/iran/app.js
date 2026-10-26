@@ -12,14 +12,12 @@ const zoom=d3.zoom().scaleExtent([1,14]).on('start',()=>{fdrag=1;tip()}).on('zoo
 svg.call(zoom).on('dblclick.zoom',null);
 D.prov.features.forEach((f,i)=>{f.properties.i=i});
 C.forEach(c=>{const f=D.prov.features.find(f=>d3.geoContains(f,[c.x,c.y]));c.pi=f?f.properties.i:-1});
-const ADJ=C.map(()=>[]);D.edges.forEach(([a,b])=>{const w=KM(C[a],C[b])*1.2;ADJ[a].push([b,w]);ADJ[b].push([a,w])});
 function tip(e,t){const el=$('#tip');if(!t){el.style.display='none';return}el.textContent=t;el.style.display='block';el.style.left=e.clientX+14+'px';el.style.top=e.clientY+14+'px'}
 function render(){
  W=innerWidth;H=innerHeight;HT=$('header').offsetHeight;proj=d3.geoMercator().fitExtent([[10,HT+4],[W-view().pw-10,H-10]],{type:'MultiPoint',coordinates:[[43.6,24.4],[63.8,40.2]]});path=d3.geoPath(proj);
  zoom.translateExtent([[0,0],[W,H]]);
  const a=proj(D.img.b[0]),b=proj(D.img.b[1]);IA=[a[0],a[1],b[0]-a[0],b[1]-a[1]];
  PP=D.prov.features.map(f=>new Path2D(path(f)));PN=new Path2D(path(D.nb));PL=new Path2D(path(D.lakes));PR=new Path2D(path(D.rivers));
- PE=new Path2D(D.edges.map(e=>path({type:'LineString',coordinates:[[C[e[0]].x,C[e[0]].y],[C[e[1]].x,C[e[1]].y]]})).join(''));
  const rk=l=>l.ty==='t'&&l.mk<=1?0:l.ty==='t'?1:l.ty==='pr'?2:l.ty==='c'?3:4;
  L=[...D.prov.features.map(f=>({t:f.properties.n,ty:'pr',mk:1,ll:d3.geoCentroid(f)})),...D.lab.map(m=>({t:m.n,ty:m.ty,mk:m.mk,e:m.e,ll:[m.x,m.y]})),...C.map(c=>({t:c.n,ty:'t',mk:c.mk,c,ll:[c.x,c.y]}))]
   .map(l=>{[l.x,l.y]=proj(l.ll);return l}).sort((p,q)=>rk(p)-rk(q)||p.mk-q.mk);
@@ -31,7 +29,7 @@ function on(l,k){if(k<l.mk)return 0;
 function sched(){if(!fr)fr=requestAnimationFrame(()=>{fr=0;fdraw()})}
 function update(){sched()}
 function layout(k){const bx=[],out=[];
- for(const l of L){const x=l.x*k+T.x,y=l.y*k+T.y;
+ for(const l of L){if(!l.t)continue;const x=l.x*k+T.x,y=l.y*k+T.y;
   if(x<-60||x>W+60||y<HT+6||y>H+20||!on(l,k))continue;
   const dot=l.ty==='t'||l.ty==='k',w=l.t.length*7.5+(dot?14:0),x0=dot?x-5:x-w/2,y0=y-8;
   if(bx.some(b=>x0<b[2]&&x0+w>b[0]&&y0<b[3]&&y0+16>b[1]))continue;
@@ -48,7 +46,6 @@ function fdraw(){
   c.lineWidth=(pol?1:1.1)/k;c.strokeStyle=pol?'#fff':'#5b3a1e';c.setLineDash(pol?[]:[5/k,3/k]);c.stroke(p)});c.setLineDash([]);
  if(sel&&sel.p){c.lineWidth=2.4/k;c.strokeStyle='#1d3557';c.stroke(PP[sel.p.properties.i])}
  if(layers.water){c.fillStyle='#a9d4e8';c.fill(PL);c.lineWidth=.7/k;c.strokeStyle='#6fb0cf';c.stroke(PL);if(!fdrag){c.lineWidth=1/k;c.strokeStyle='#4f9cc8';c.stroke(PR)}}
- if(layers.roads){c.lineWidth=1.6/k;c.strokeStyle='#c0392bcc';c.stroke(PE)}
  if(ROUTE){c.lineWidth=3.5/k;c.strokeStyle='#d9502b';c.setLineDash([7/k,5/k]);c.stroke(ROUTE);c.setLineDash([])}
  c.setTransform(dpr,0,0,dpr,0,0);fvis=layout(k);dlabels(c,fvis,fdrag);
 }
@@ -102,12 +99,9 @@ function dpanel(a,b){
 }
 function calc(a,b){
  clearRoute();const o=$('#out');if(!b||a===b){o.innerHTML='';return}
- const air=KM(a,b),A=C.indexOf(a),B=C.indexOf(b),dist=C.map(()=>1e9),prev=[],q=[A];dist[A]=0;
- while(q.length){q.sort((x,y)=>dist[x]-dist[y]);const u=q.shift();for(const[v,w]of ADJ[u])if(dist[u]+w<dist[v]){dist[v]=dist[u]+w;prev[v]=u;q.push(v)}}
- const ok=dist[B]<1e9,road=ok?dist[B]:air*1.25;let pts=[[a.x,a.y],[b.x,b.y]],names='';
- if(ok){pts=[];names=[];for(let v=B;v!=null;v=prev[v]){pts.unshift([C[v].x,C[v].y]);names.unshift(C[v].n)}names='<div class="note">مسیر: '+names.join(' ← ')+'</div>'}
- ROUTE=new Path2D(path({type:'LineString',coordinates:pts}));sched();
- o.innerHTML=`<div class="res">${row('فاصله‌ی هوایی',fa(air)+' کیلومتر')}${row('فاصله‌ی جاده‌ای (تقریبی)',fa(road)+' کیلومتر')}${row('زمان تقریبی با ۸۰ کیلومتر در ساعت',fa(road/80,1)+' ساعت')}</div>${names}<div class="note">فاصله‌ی هوایی دقیق است. فاصله‌ی جاده‌ای از روی یک شبکه‌ی ساده‌شده‌ی راه‌های اصلی برآورد شده و با فاصله‌ی واقعی تفاوت دارد.</div>`;
+ const air=KM(a,b);
+ ROUTE=new Path2D(path({type:'LineString',coordinates:[[a.x,a.y],[b.x,b.y]]}));sched();
+ o.innerHTML=`<div class="res">${row('فاصله‌ی هوایی',fa(air)+' کیلومتر')}</div><div class="note">فاصله‌ی هوایی (خط مستقیم روی کره‌ی زمین) است؛ فاصله‌ی جاده‌ای به مسیر راه‌ها بستگی دارد و کمتر یا بیشتر از این عدد است.</div>`;
  const[x0,y0]=proj([Math.min(a.x,b.x),Math.max(a.y,b.y)]),[x1,y1]=proj([Math.max(a.x,b.x),Math.min(a.y,b.y)]);zoomPx([[x0,y0],[x1,y1]],6);
 }
 $('#md').onclick=e=>{const v=e.target.dataset.v;if(!v)return;mode=v;sched();[...$('#md').children].forEach(b=>b.classList.toggle('on',b.dataset.v===v))};
@@ -126,3 +120,4 @@ if(window.Bridge)Bridge.on('ctx',m=>{if(m.cause==='sync')return;const p=m.place;
  if(!p||!(p.lo>43&&p.lo<64&&p.la>24&&p.la<40))return;
  const c=C.find(c=>Math.abs(c.x-p.lo)<.08&&Math.abs(c.y-p.la)<.08);
  if(c)return pickCity(c);const[x,y]=proj([p.lo,p.la]);zoomPx([[x-40,y-25],[x+40,y+25]],10)});
+new ResizeObserver(()=>document.documentElement.style.setProperty('--ph',$('#panel').offsetHeight+'px')).observe($('#panel'));

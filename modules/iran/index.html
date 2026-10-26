@@ -36,7 +36,7 @@ select{width:100%;margin:4px 0;padding:6px;border-radius:8px;border:1.5px solid 
  #lyr{display:none;width:100%;order:10;background:#fff;border-radius:12px;padding:6px 12px;line-height:2.1}header.open #lyr{display:block}header:not(.open) #ch,header a[href="atlas-iran.html"]{display:none}
  #ch{order:8;width:100%;overflow-x:auto;white-space:nowrap;display:flex;gap:6px}#q{flex:1;min-width:110px}.seg button{padding:3px 10px}
  #panel{top:auto;bottom:0;left:0;right:0;inset-inline-start:0;width:auto;max-height:46vh;border-radius:18px 18px 0 0;padding:16px 16px 22px}
- #panel.empty{display:none}#panel:not(.empty)~#hint{display:none}
+ #panel.empty{display:none}#panel:not(.empty)~#hint{display:none}#panel:not(.empty)~#zm{top:auto;bottom:calc(var(--ph,46vh) + 12px);transform:none}#panel{z-index:6}.x{width:38px!important;height:38px!important;font-size:17px!important}
  #hint{display:block;position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:#1d3557d9;color:#fff;padding:6px 16px;border-radius:99px;font-size:13px;z-index:4;pointer-events:none;white-space:nowrap}
  .x{display:block;position:absolute;top:10px;left:12px;border:0;background:#0001;border-radius:50%;width:32px;height:32px;font-size:15px;cursor:pointer}
  #zm{bottom:auto;top:50%;transform:translateY(-50%)}#zm button{width:42px;height:42px}
@@ -44,9 +44,9 @@ select{width:100%;margin:4px 0;padding:6px;border-radius:8px;border:1.5px solid 
 </style></head><body>
 <header><h1><span class="f"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 513 342"><path fill="#FFF" d="M0 0h512v342H0z"/><path fill="#6DA544" d="M0 0h513v114H0z"/><g fill="#D80027"><path d="M0 227.9h513v114H0zM278.8 134.8c.1 2 8.7 26.2 4.4 39.4-6.6 20.3-15.8 21.8-19.8 24.5V134l-6.9-4.2-6.9 4.2v64.7c-4-2.7-12.4-2.4-19.8-24.5-4.3-12.7 5.7-37.3 5.8-39.2 0 0-9.5 8.1-15.8 24-5.9 14.8 1.9 49.6 29.5 54.8 2.3.4 4.7 5.6 7.2 5.6 2.1 0 4.1-5.2 6-5.5 28.4-4.6 35-41.7 29.9-55.6-5.4-14.6-13.6-23.5-13.6-23.5z"/></g><g fill="#FFF" opacity=".5"><path d="M44.6 98.9h22.3v24.4H44.6zM0 98.9h22.3v24.4H0zM89.2 98.9h22.3v24.4H89.2zM133.8 98.9h22.3v24.4h-22.3zM178.4 98.9h22.3v24.4h-22.3zM223 98.9h22.3v24.4H223zM267.7 98.9H290v24.4h-22.3zM312.3 98.9h22.3v24.4h-22.3zM356.9 98.9h22.3v24.4h-22.3zM401.5 98.9h22.3v24.4h-22.3zM446.1 98.9h22.3v24.4h-22.3zM490.7 98.9H513v24.4h-22.3zM44.6 216.9h22.3v25.5H44.6zM0 216.9h22.3v25.5H0zM89.2 216.9h22.3v25.5H89.2zM133.8 216.9h22.3v25.5h-22.3zM178.4 216.9h22.3v25.5h-22.3zM223 216.9h22.3v25.5H223zM267.7 216.9H290v25.5h-22.3zM312.3 216.9h22.3v25.5h-22.3zM356.9 216.9h22.3v25.5h-22.3zM401.5 216.9h22.3v25.5h-22.3zM446.1 216.9h22.3v25.5h-22.3zM490.7 216.9H513v25.5h-22.3z"/></g></svg></span>اطلس ایران</h1><a class="chip" href="#" data-go="atlas">🌍 اطلس جهان</a>
 <div class="seg" id="md"><button data-v="pol" class="on">استان‌ها</button><button data-v="nat">طبیعی</button></div>
-<a class="chip" href="#" data-go="countries">🃏 کارت‌ها</a><button class="chip" id="gear">⚙️</button><button class="chip" id="dist">📏 فاصله‌ی شهرها</button>
+<a class="chip" href="#" data-go="countries">🃏 کارت‌ها</a><button class="chip" id="gear">⚙️</button><button class="chip" id="dist">📏 فاصله‌ی هوایی شهرها</button>
 <div style="position:relative"><input id="q" placeholder="جستجوی استان یا شهر…" autocomplete="off"><div id="res"></div></div>
-<span id="lyr"><label><input type="checkbox" data-l="cities" checked> شهرها</label> <label><input type="checkbox" data-l="roads" checked> مسیرهای اصلی</label> <label><input type="checkbox" data-l="water" checked> رودها و دریاچه‌ها</label> <label><input type="checkbox" data-l="labels" checked> نام‌ها</label></span></header>
+<span id="lyr"><label><input type="checkbox" data-l="cities" checked> شهرها</label>  <label><input type="checkbox" data-l="water" checked> رودها و دریاچه‌ها</label> <label><input type="checkbox" data-l="labels" checked> نام‌ها</label></span></header>
 <canvas id="fl"></canvas>
 <div id="panel"></div><div id="hint">روی یک استان یا شهر بزنید ☝️</div><div id="zm"><button id="zi">+</button><button id="zo">−</button><button id="zr" title="کل ایران">⌂</button></div><div id="tip"></div>
 <script src="../../assets/lib/d3.min.js"></script>

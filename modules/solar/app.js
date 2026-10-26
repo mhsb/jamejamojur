@@ -193,3 +193,4 @@ $('toMap').onclick=()=>Bridge.go('atlas',{place:curPlace()});
 if(window.Bridge)Bridge.on('ctx',m=>{if(m.place)setPlace(m.place);
  if(m.cause!=='sync'&&(m.place||m.time)){setFocus(earthF);tDist=7}
  if(m.time)setTime(m.time.ms)});
+$('mt').onclick=()=>{const o=$('bar').classList.toggle('open');$('mt').textContent=o?'⚙️ کنترل‌ها ▾':'⚙️ کنترل‌ها ▴'};

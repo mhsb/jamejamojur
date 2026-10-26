@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   var $ = function (s) { return document.querySelector(s); };
-  var APP = 'زمین و آسمان';
+  var APP = 'جامـ جمـع و جور';
   var MODS = {
     sky: ['گنبد آسمان', 'modules/sky/index.html'],
     solar: ['منظومهٔ شمسی', 'modules/solar/index.html'],

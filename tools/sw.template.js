@@ -1,6 +1,6 @@
 /* سرویس‌ورکر: همهٔ فایل‌ها یک‌بار کش می‌شوند و برنامه کاملاً آفلاین کار می‌کند.
    این فایل خودکار ساخته می‌شود (tools/build_sw.py)؛ دستی ویرایشش نکنید. */
-const CACHE = 'zamin-asman-__VERSION__';
+const CACHE = 'jam-__VERSION__';
 const ASSETS = __ASSETS__;
 
 self.addEventListener('install', e => {
@@ -9,7 +9,7 @@ self.addEventListener('install', e => {
 
 self.addEventListener('activate', e => {
   e.waitUntil((async () => {
-    for (const k of await caches.keys()) if (k.startsWith('zamin-asman-') && k !== CACHE) await caches.delete(k);
+    for (const k of await caches.keys()) if ((k.startsWith('zamin-asman-') || k.startsWith('jam-')) && k !== CACHE) await caches.delete(k);
     await self.clients.claim();
     for (const c of await self.clients.matchAll()) c.postMessage({ sw: 'ready' });
   })());

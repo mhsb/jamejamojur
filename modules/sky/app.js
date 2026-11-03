@@ -94,7 +94,6 @@ function hill(amp,fr,p,col){ctx.fillStyle=col;ctx.beginPath();let a=null,b=null;
   if(q.z>.02){if(!a){a=q;ctx.moveTo(q.sx,H+50);}ctx.lineTo(q.sx,q.sy);b=q}}
  if(b){ctx.lineTo(b.sx,H+50);ctx.fill()}}
 
-<<<<<<< HEAD
 /*MOON*/
 const rev=x=>((x%360)+360)%360,sd=x=>Math.sin(x*R),cd=x=>Math.cos(x*R);
 function moonEq(ms){
@@ -141,8 +140,6 @@ function drawMoon(mm,mp,cloud,e,s){
  ctx.closePath();ctx.clip();ctx.rotate(-phi+th);ctx.globalAlpha=vis*(.82+.18*dk);moonTex(r,col,1);ctx.restore();ctx.restore();ctx.globalAlpha=1}
 const mp0=m=>({az:m.az,el:m.el}),sunPt=s=>({az:s.az,el:s.el});
 
-=======
->>>>>>> a06d0a144c7bc937524268e70831105461af1dd7
 function draw(T,dt){
  const ms=getMs(),s=sunAt(city.la,city.lo,ms),e=s.el,k=wx();lastSun=s;
  cY=Math.cos(yaw*R);sY=Math.sin(yaw*R);cP=Math.cos(pitch*R);sP=Math.sin(pitch*R);f=(H/2)/Math.tan(fov*R/2);
@@ -160,13 +157,8 @@ function draw(T,dt){
  if(sp.z>.02&&e>-4){const c=mix([255,110,40],[255,244,200],cl(e/18,0,1)),gr=f*.32,r=Math.max(9,f*Math.tan(2.6*R));
   g=ctx.createRadialGradient(sp.sx,sp.sy,r*.5,sp.sx,sp.sy,gr);g.addColorStop(0,`rgba(${c.map(Math.round)},${.55*sv})`);g.addColorStop(1,`rgba(${c.map(Math.round)},0)`);
   ctx.fillStyle=g;ctx.fillRect(sp.sx-gr,sp.sy-gr,gr*2,gr*2);ctx.globalAlpha=.4+.6*sv;ctx.fillStyle=rgb(c);ctx.beginPath();ctx.arc(sp.sx,sp.sy,r,0,7);ctx.fill();ctx.globalAlpha=1}
-<<<<<<< HEAD
  const mm=moonAt(city.la,city.lo,ms),mp=P(mm.az,mm.el);
  if(mp.z>.02&&mm.el>-4)drawMoon(mm,mp,k.cloud,e,s);
-=======
- const mp=P((s.az+180)%360,-e);
- if(mp.z>.02&&-e>-2){ctx.globalAlpha=(1-k.cloud*.7)*cl((-e+2)/8,0,1);ctx.fillStyle='#eef2ff';ctx.beginPath();ctx.arc(mp.sx,mp.sy,Math.max(8,f*Math.tan(2.2*R)),0,7);ctx.fill();ctx.globalAlpha=1}
->>>>>>> a06d0a144c7bc937524268e70831105461af1dd7
  const lm=ms-mins*6e4;ctx.fillStyle='rgba(255,255,255,.45)';
  for(let i=0;i<=48;i++){const q=sunAt(city.la,city.lo,lm+i*18e5);if(q.el>-1){const p=P(q.az,q.el);if(p.z>.02){ctx.beginPath();ctx.arc(p.sx,p.sy,2,0,7);ctx.fill()}}}
  const warm=cl(1-Math.abs(e-2)/10,0,1)*.35,cc=mix(mix([255,255,255],[92,100,114],k.cloud>.6?.7:.1),[255,170,120],warm).map(v=>v*(.22+.78*L)),n=Math.round(2+k.cloud*8);
@@ -197,7 +189,6 @@ function draw(T,dt){
   ctx.save();ctx.translate(W/2+Math.cos(a)*r,H/2+Math.sin(a)*r);ctx.rotate(a);ctx.fillStyle='rgba(255,205,80,.95)';ctx.beginPath();ctx.moveTo(14,0);ctx.lineTo(-8,-9);ctx.lineTo(-8,9);ctx.fill();ctx.restore();
   ctx.fillStyle='#fff';ctx.font='600 13px Vazirmatn,Tahoma,sans-serif';ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle='rgba(0,0,0,.5)';
   const tx=W/2+Math.cos(a)*(r-28),ty=H/2+Math.sin(a)*(r-28),tt=e<0?'خورشید (زیر افق)':'خورشید';ctx.strokeText(tt,tx,ty);ctx.fillText(tt,tx,ty)}
-<<<<<<< HEAD
  if(mm.el>0&&!(mp.z>.02&&mp.sx>-10&&mp.sx<W+10&&mp.sy>-10&&mp.sy<H+10)){const a=Math.atan2(-mp.y,mp.x),r=Math.min(W,H)/2-24;
   ctx.save();ctx.translate(W/2+Math.cos(a)*r,H/2+Math.sin(a)*r);ctx.rotate(a);ctx.fillStyle='rgba(205,220,255,.95)';ctx.beginPath();ctx.moveTo(14,0);ctx.lineTo(-8,-9);ctx.lineTo(-8,9);ctx.fill();ctx.restore();
   ctx.fillStyle='#fff';ctx.font='600 13px Vazirmatn,Tahoma,sans-serif';ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle='rgba(0,0,0,.5)';
@@ -205,24 +196,14 @@ function draw(T,dt){
  return{ms,s,k,lm,mm}}
 
 function info(r){const{s,k,lm,mm}=r,thr=-.833,pts=[];
-=======
- return{ms,s,k,lm}}
-
-function info(r){const{s,k,lm}=r,thr=-.833,pts=[];
->>>>>>> a06d0a144c7bc937524268e70831105461af1dd7
  for(let i=0;i<=96;i++)pts.push(sunAt(city.la,city.lo,lm+i*9e5).el-thr);
  let ri=null,se=null;for(let i=0;i<96;i++){const a=pts[i],b=pts[i+1];if(a<0&&b>=0&&ri===null)ri=i+(-a)/(b-a);if(a>=0&&b<0&&se===null)se=i+a/(a-b)}
  const hm=q=>{if(q===null)return'—';const m=Math.round(q*15);return fa(pad(Math.floor(m/60)%24)+':'+pad(m%60))};
  const len=ri===null&&se===null?(pts[0]>=0?'۲۴ ساعت':'۰ ساعت'):ri!==null&&se!==null?(m=>fa(Math.floor(m/60))+'س '+fa(m%60)+'د')(Math.round((se-ri+(se<ri?96:0))*15)):'—';
-<<<<<<< HEAD
  const mq=[];for(let i=0;i<=96;i++)mq.push(moonAt(city.la,city.lo,lm+i*9e5).el+.57);
  let mrise=null,mset=null;for(let i=0;i<96;i++){const a=mq[i],b=mq[i+1];if(a<0&&b>=0&&mrise===null)mrise=i+(-a)/(b-a);if(a>=0&&b<0&&mset===null)mset=i+a/(a-b)}
  const WN={clear:'آفتابی',wind:'باد',rain:'باران',snow:'برف'};
  $('inf').innerHTML=`<div>خورشید ${fa(Math.round(Math.abs(s.el)))}° ${s.el>=0?'بالای افق':'زیر افق'}</div><div>طلوع <bdi>${hm(ri)}</bdi> · غروب <bdi>${hm(se)}</bdi></div><div>طول روز ${len}</div><div>ماه: ${phaseName(mm.D)} · ${fa(Math.round(mm.k*100))}٪</div><div>طلوع ماه <bdi>${hm(mrise)}</bdi> · غروب <bdi>${hm(mset)}</bdi></div><div>${k.season} · ${WN[k.type]} · <bdi>${fa(Math.round(k.temp))}°C</bdi></div>`;
-=======
- const WN={clear:'آفتابی',wind:'باد',rain:'باران',snow:'برف'};
- $('inf').innerHTML=`<div>خورشید ${fa(Math.round(Math.abs(s.el)))}° ${s.el>=0?'بالای افق':'زیر افق'}</div><div>طلوع <bdi>${hm(ri)}</bdi> · غروب <bdi>${hm(se)}</bdi></div><div>طول روز ${len}</div><div>${k.season} · ${WN[k.type]} · <bdi>${fa(Math.round(k.temp))}°C</bdi></div>`;
->>>>>>> a06d0a144c7bc937524268e70831105461af1dd7
  $('loc').textContent=fa(Math.abs(city.la).toFixed(1))+(city.la>=0?'° شمالی، ':'° جنوبی، ')+fa(Math.abs(city.lo).toFixed(1))+(city.lo>=0?'° شرقی':'° غربی')}
 const DF=new Intl.DateTimeFormat('fa-IR',{timeZone:'UTC',day:'numeric',month:'long'});
 function labels(){$('chip').textContent=city.n+' · '+fa(pad(Math.floor(mins/60))+':'+pad(Math.floor(mins%60)))+' · '+DF.format(new Date(Date.UTC(YR,0,Math.floor(doyF))))}

@@ -30,4 +30,13 @@
     B.go(d.go, o);
   });
   addEventListener('load', function () { B.send({ t: 'ready' }); });
+  /* اگر خطایی رخ دهد، به‌جای صفحهٔ خالی، پیام آن را نشان می‌دهد (برای گزارش) */
+  addEventListener('error', function (e) {
+    var m = String(e.message || '');
+    if (!m || /ResizeObserver|^Script error/i.test(m)) return;
+    var d = document.getElementById('errbox');
+    if (!d) { d = document.createElement('div'); d.id = 'errbox'; document.body.appendChild(d); d.onclick = function () { d.remove(); }; }
+    d.style.cssText = 'position:fixed;z-index:99;left:8px;right:8px;bottom:8px;background:#7a1020;color:#fff;font:12px/1.6 monospace;padding:8px 10px;border-radius:10px;direction:ltr;text-align:left;max-height:35vh;overflow:auto';
+    d.textContent = '⚠ ' + m + ' (' + String(e.filename || '').split('/').slice(-3).join('/') + ':' + e.lineno + ') — tap to close';
+  });
 })();

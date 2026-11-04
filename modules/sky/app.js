@@ -95,6 +95,7 @@ function hill(amp,fr,p,col){ctx.fillStyle=col;ctx.beginPath();let a=null,b=null;
  if(b){ctx.lineTo(b.sx,H+50);ctx.fill()}}
 
 /*MOON*/
+let moonOff=false,errOnce=false;
 const rev=x=>((x%360)+360)%360,sd=x=>Math.sin(x*R),cd=x=>Math.cos(x*R);
 function moonEq(ms){
  const d=ms/DAY+2440587.5-2451543.5,
@@ -158,7 +159,7 @@ function draw(T,dt){
   g=ctx.createRadialGradient(sp.sx,sp.sy,r*.5,sp.sx,sp.sy,gr);g.addColorStop(0,`rgba(${c.map(Math.round)},${.55*sv})`);g.addColorStop(1,`rgba(${c.map(Math.round)},0)`);
   ctx.fillStyle=g;ctx.fillRect(sp.sx-gr,sp.sy-gr,gr*2,gr*2);ctx.globalAlpha=.4+.6*sv;ctx.fillStyle=rgb(c);ctx.beginPath();ctx.arc(sp.sx,sp.sy,r,0,7);ctx.fill();ctx.globalAlpha=1}
  const mm=moonAt(city.la,city.lo,ms),mp=P(mm.az,mm.el);
- if(mp.z>.02&&mm.el>-4)drawMoon(mm,mp,k.cloud,e,s);
+ if(!moonOff&&mp.z>.02&&mm.el>-4){try{drawMoon(mm,mp,k.cloud,e,s)}catch(err){moonOff=true;ctx.globalAlpha=1;setTimeout(()=>{throw err})}}
  const lm=ms-mins*6e4;ctx.fillStyle='rgba(255,255,255,.45)';
  for(let i=0;i<=48;i++){const q=sunAt(city.la,city.lo,lm+i*18e5);if(q.el>-1){const p=P(q.az,q.el);if(p.z>.02){ctx.beginPath();ctx.arc(p.sx,p.sy,2,0,7);ctx.fill()}}}
  const warm=cl(1-Math.abs(e-2)/10,0,1)*.35,cc=mix(mix([255,255,255],[92,100,114],k.cloud>.6?.7:.1),[255,170,120],warm).map(v=>v*(.22+.78*L)),n=Math.round(2+k.cloud*8);
@@ -215,7 +216,7 @@ function frame(ts){if(window.Bridge&&!Bridge.visible){last=ts;requestAnimationFr
  if(vx||vy){mins=((mins+vx*60*dt)%1440+1440)%1440;doyF+=vy*dt;if(doyF>=366)doyF-=365;if(doyF<1)doyF+=365;labels()}
  if(follow&&!gyroOn){const dy=((lastSun.az-yaw+540)%360)-180;yaw=(yaw+dy*.12+360)%360;pitch+=(cl(lastSun.el,-8,80)-pitch)*.12}
  if(gyroOn&&got){const dy=((gt.y-yaw+540)%360)-180;yaw=(yaw+dy*.25+360)%360;pitch+=(gt.p-pitch)*.25}
- const r=draw(ts/1000,dt);if(ts-lastInfo>200){lastInfo=ts;info(r)}
+ try{const r=draw(ts/1000,dt);if(ts-lastInfo>200){lastInfo=ts;info(r)}}catch(err){if(!errOnce){errOnce=true;setTimeout(()=>{throw err})}}
  requestAnimationFrame(frame)}
 function pickCity(){const c=DB[$('co').value][+$('ci').value];city={n:c[0],la:c[1],lo:c[2],z:c[3],f:c[4],i:Object.keys(DB).indexOf($('co').value)*7+(+$('ci').value)};if(!gyroOn&&!follow){yaw=c[1]>=0?180:0;pitch=20}}
 function fillCities(){$('ci').innerHTML=DB[$('co').value].map((c,i)=>`<option value="${i}">${c[0]}</option>`).join('');pickCity()}

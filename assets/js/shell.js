@@ -209,6 +209,12 @@
   }
   if ('serviceWorker' in navigator) {
     addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+    var hadCtl = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (!hadCtl) return;
+      var t = $('#toast'); t.textContent = '🔄 نسخهٔ جدید آماده شد — برای اعمال، اینجا بزنید'; t.hidden = false; t.style.cursor = 'pointer';
+      t.onclick = function () { location.reload(); };
+    });
   }
 
   /* ---------- مسیر، کلیدها، شروع ---------- */

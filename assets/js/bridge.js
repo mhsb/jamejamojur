@@ -12,13 +12,21 @@
       if (emb) B.send({ t: 'go', to: to, place: o.place, time: o.time, opt: o.opt });
       else location.href = PATH[to] + (o.opt && o.opt.a3 && to === 'atlas' ? '#' + o.opt.a3 : '');
     },
-    place: function (p) { B.send({ t: 'place', place: p }); }
+    place: function (p) { B.send({ t: 'place', place: p }); },
+    /* گزارش زمان فعلی به پوسته (کم‌تکرار) تا بخش‌های دیگر هم‌زمان شوند */
+    time: function (ms) {
+      var n = Date.now();
+      if (!emb || n - B._lt < 400 || (B._lms != null && Math.abs(ms - B._lms) < 30000)) return;
+      B._lt = n; B._lms = ms; B.send({ t: 'time', ms: ms });
+    },
+    _lt: 0, _lms: null
   });
   addEventListener('message', function (e) {
     var m = e.data;
     if (!emb || e.source !== parent || !m || !m.__geo) return;
     if (m.t === 'vis') B.visible = !!m.v;
     (B.h[m.t] || []).forEach(function (f) { f(m); });
+    if (m.t === 'ctx') { if (m.time) B._lms = m.time.ms; B.send({ t: 'primed' }); }
   });
   document.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('[data-go]');

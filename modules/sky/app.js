@@ -96,28 +96,7 @@ function hill(amp,fr,p,col){ctx.fillStyle=col;ctx.beginPath();let a=null,b=null;
 
 /*MOON*/
 let moonOff=false,errOnce=false;
-const rev=x=>((x%360)+360)%360,sd=x=>Math.sin(x*R),cd=x=>Math.cos(x*R);
-function moonEq(ms){
- const d=ms/DAY+2440587.5-2451543.5,
-  N=125.1228-.0529538083*d,i=5.1454,w=318.0634+.1643573223*d,a=60.2666,e=.0549,M=rev(115.3654+13.0649929509*d),
-  Ms=rev(356.047+.9856002585*d),ws=282.9404+4.70935e-5*d,Ls=rev(Ms+ws),Lm=rev(M+w+N),Dm=rev(Lm-Ls),F=rev(Lm-N);
- let E=M+e/R*sd(M)*(1+e*cd(M));for(let j=0;j<3;j++)E=E-(E-e/R*sd(E)-M)/(1-e*cd(E));
- const xv=a*(cd(E)-e),yv=a*Math.sqrt(1-e*e)*sd(E),v=Math.atan2(yv,xv)/R,r=Math.hypot(xv,yv),vw=v+w,
-  xh=r*(cd(N)*cd(vw)-sd(N)*sd(vw)*cd(i)),yh=r*(sd(N)*cd(vw)+cd(N)*sd(vw)*cd(i)),zh=r*sd(vw)*sd(i);
- let lon=Math.atan2(yh,xh)/R,lat=Math.atan2(zh,Math.hypot(xh,yh))/R,dist=r;
- lon+=-1.274*sd(M-2*Dm)+.658*sd(2*Dm)-.186*sd(Ms)-.059*sd(2*M-2*Dm)-.057*sd(M-2*Dm+Ms)+.053*sd(M+2*Dm)+.046*sd(2*Dm-Ms)+.041*sd(M-Ms)-.035*sd(Dm)-.031*sd(M+Ms)-.015*sd(2*F-2*Dm)+.011*sd(M-4*Dm);
- lat+=-.173*sd(F-2*Dm)-.055*sd(M-F-2*Dm)-.046*sd(M+F-2*Dm)+.033*sd(F+2*Dm)+.017*sd(2*M+F);
- dist+=-.58*cd(M-2*Dm)-.46*cd(2*Dm);
- const ec=23.4393-3.563e-7*d,xe=cd(lon)*cd(lat),ye=sd(lon)*cd(lat)*cd(ec)-sd(lat)*sd(ec),ze=sd(lon)*cd(lat)*sd(ec)+sd(lat)*cd(ec),
-  psi=Math.acos(cl(cd(lat)*cd(lon-Ls),-1,1))/R;
- return{ra:rev(Math.atan2(ye,xe)/R),dec:Math.atan2(ze,Math.hypot(xe,ye))/R,dist,D:rev(lon-Ls),k:(1-cd(psi))/2,jd:d+2451543.5}}
-function eqHor(ra,dec,la,lo,jd){const H=(rev(280.46061837+360.98564736629*(jd-2451545))+lo-ra)*R,p=la*R,dd=dec*R,
- el=Math.asin(cl(Math.sin(p)*Math.sin(dd)+Math.cos(p)*Math.cos(dd)*Math.cos(H),-1,1))/R,
- az=Math.atan2(Math.sin(H),Math.cos(H)*Math.sin(p)-Math.tan(dd)*Math.cos(p))/R+180;return{el,az:rev(az)}}
-function moonAt(la,lo,ms){const m=moonEq(ms),h=eqHor(m.ra,m.dec,la,lo,m.jd);
- m.el=h.el-Math.asin(cd(h.el)/m.dist)/R;m.az=h.az;m.pole=eqHor(270,66.5607,la,lo,m.jd);return m}
-function phaseName(D){const t=[[7,'محاق'],[83,'هلال رو به رشد'],[97,'تربیع اول'],[173,'کوژ رو به رشد'],[187,'ماه کامل'],[263,'کوژ رو به کاهش'],[277,'تربیع آخر'],[353,'هلال رو به کاهش']];
- for(const[a,n]of t)if(D<a)return n;return'محاق'}
+const{moonEq,moonAt,eqHor,phaseName}=Astro;
 /*ENDMOON*/
 
 /* جهت صفحه‌ای از نقطهٔ m به سمت t (رادیان) */
@@ -216,7 +195,7 @@ function frame(ts){if(window.Bridge&&!Bridge.visible){last=ts;requestAnimationFr
  if(vx||vy){mins=((mins+vx*60*dt)%1440+1440)%1440;doyF+=vy*dt;if(doyF>=366)doyF-=365;if(doyF<1)doyF+=365;labels()}
  if(follow&&!gyroOn){const dy=((lastSun.az-yaw+540)%360)-180;yaw=(yaw+dy*.12+360)%360;pitch+=(cl(lastSun.el,-8,80)-pitch)*.12}
  if(gyroOn&&got){const dy=((gt.y-yaw+540)%360)-180;yaw=(yaw+dy*.25+360)%360;pitch+=(gt.p-pitch)*.25}
- try{const r=draw(ts/1000,dt);if(ts-lastInfo>200){lastInfo=ts;info(r)}}catch(err){if(!errOnce){errOnce=true;setTimeout(()=>{throw err})}}
+ try{const r=draw(ts/1000,dt);if(ts-lastInfo>200){lastInfo=ts;info(r)}if(window.Bridge)Bridge.time(getMs())}catch(err){if(!errOnce){errOnce=true;setTimeout(()=>{throw err})}}
  requestAnimationFrame(frame)}
 function pickCity(){const c=DB[$('co').value][+$('ci').value];city={n:c[0],la:c[1],lo:c[2],z:c[3],f:c[4],i:Object.keys(DB).indexOf($('co').value)*7+(+$('ci').value)};if(!gyroOn&&!follow){yaw=c[1]>=0?180:0;pitch=20}}
 function fillCities(){$('ci').innerHTML=DB[$('co').value].map((c,i)=>`<option value="${i}">${c[0]}</option>`).join('');pickCity()}

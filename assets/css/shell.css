@@ -62,6 +62,7 @@ dialog .x{position:absolute;top:10px;inset-inline-start:10px;width:34px;height:3
 .dim{color:var(--dim)}.small{font-size:12px}
 .by{margin:14px 0;padding:12px;border-radius:14px;background:rgba(255,179,71,.1);border:1px solid rgba(255,179,71,.3);display:flex;flex-direction:column;gap:2px}
 .by b{font-size:19px;color:var(--acc)}.by a{color:var(--sky);font-weight:600;text-decoration:none}.by a:hover{text-decoration:underline}
+.chg{text-align:start;margin:6px 0 10px;font-size:13px}.chg summary{cursor:pointer;color:var(--sky);text-align:center}.chg h4{margin:10px 0 2px;color:var(--acc)}.chg ul{margin:2px 0;padding-inline-start:20px}
 .st{margin:10px 0;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.06)}
 #install{width:100%;flex:none;margin:4px 0}
 #toast{position:fixed;inset-inline:0;bottom:calc(var(--navh) + 18px + env(safe-area-inset-bottom,0px));margin:auto;width:fit-content;max-width:calc(100% - 32px);background:rgba(17,26,51,.96);border:1px solid var(--line);border-radius:14px;padding:8px 16px;font-size:14px;z-index:30}

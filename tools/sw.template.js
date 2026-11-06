@@ -3,7 +3,7 @@
    این فایل خودکار ساخته می‌شود (tools/build_sw.py)؛ دستی ویرایشش نکنید. */
 const CACHE = 'jam-__VERSION__';
 const ASSETS = __ASSETS__;
-const FRESH = /(\.html|\.css|\.webmanifest|\/(app|shell|bridge)\.js)$|\/$/;
+const FRESH = /(\.html|\.css|\.webmanifest|\/(app|shell|bridge|version|astro)\.js)$|\/$/;
 
 self.addEventListener('install', e => {
   e.waitUntil((async () => {

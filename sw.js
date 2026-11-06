@@ -1,7 +1,7 @@
 /* سرویس‌ورکر: همهٔ فایل‌ها یک‌بار کش می‌شوند و برنامه کاملاً آفلاین کار می‌کند.
    کدها (html/js/css) همیشه اول از اینترنت تازه گرفته می‌شوند و فقط وقتی اینترنت نیست از کش می‌آیند.
    این فایل خودکار ساخته می‌شود (tools/build_sw.py)؛ دستی ویرایشش نکنید. */
-const CACHE = 'jam-60dfb735bb';
+const CACHE = 'jam-ed6075aacc';
 const ASSETS = [
  "./",
  "assets/css/shell.css",
@@ -11,8 +11,10 @@ const ASSETS = [
  "assets/icons/icon-512.png",
  "assets/icons/icon.svg",
  "assets/icons/maskable-512.png",
+ "assets/js/astro.js",
  "assets/js/bridge.js",
  "assets/js/shell.js",
+ "assets/js/version.js",
  "assets/lib/d3.min.js",
  "assets/lib/three.min.js",
  "data/places.json",
@@ -32,7 +34,7 @@ const ASSETS = [
  "modules/solar/app.js",
  "modules/solar/index.html"
 ];
-const FRESH = /(\.html|\.css|\.webmanifest|\/(app|shell|bridge)\.js)$|\/$/;
+const FRESH = /(\.html|\.css|\.webmanifest|\/(app|shell|bridge|version|astro)\.js)$|\/$/;
 
 self.addEventListener('install', e => {
   e.waitUntil((async () => {

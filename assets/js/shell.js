@@ -18,7 +18,7 @@
   };
   var fa = function (s) { return String(s).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); };
   var saved = LS.get('geo.place');
-  var S = { mod: null, v: saved ? 1 : 0, place: saved || TEHRAN };
+  var S = { mod: null, v: saved ? 1 : 0, place: saved || TEHRAN, time: null };
   var frames = {}, tick = 0, DB = null, IDX = null, KN = {};
   var stage = $('#stage');
 
@@ -69,7 +69,7 @@
     el.allow = 'fullscreen; accelerometer; gyroscope; magnetometer; geolocation';
     el.setAttribute('allowfullscreen', '');
     stage.appendChild(el);
-    return (frames[k] = { el: el, ready: false, q: [], seen: 0, use: 0 });
+    return (frames[k] = { el: el, ready: false, q: [], seen: 0, use: 0, shown: false, lastT: null, primed: false });
   }
   function raw(f, m) { f.el.contentWindow.postMessage(Object.assign({ __geo: 1 }, m), '*'); }
   function post(k, m) {
@@ -101,10 +101,16 @@
     if (!noPush && prev !== k) {
       try { history[prev ? 'pushState' : 'replaceState']({ m: k }, '', '#/' + k); } catch (e) {}
     }
-    var explicit = o.place || o.time || o.opt;
-    var cause = explicit ? 'go' : 'sync';
-    if (cause === 'go' || f.seen !== S.v) {
-      post(k, { t: 'ctx', cause: cause, place: S.place, time: o.time, opt: o.opt });
+    var explicit = o.place || o.time || o.opt, cause = explicit ? 'go' : 'sync';
+    var fresh = !f.shown, timed = k === 'sky' || k === 'solar', tm = o.time || null;
+    f.shown = true;
+    /* همگام‌سازی زمان بین گنبد آسمان و منظومه */
+    if (!tm && timed) {
+      var T = S.time ? S.time.ms : (k === 'solar' ? Date.now() : null);
+      if (T != null && (fresh || !(S.time && S.time.src === k)) && (f.lastT == null || Math.abs(T - f.lastT) > 60000)) tm = { ms: T };
+    }
+    if (explicit || f.seen !== S.v || tm || (fresh && timed)) {
+      post(k, { t: 'ctx', cause: cause, place: (explicit || f.seen !== S.v) ? S.place : undefined, time: tm, opt: o.opt });
       f.seen = S.v;
     }
     gc(); closeSheet(); renderPlace();
@@ -117,12 +123,18 @@
       var f = frames[k]; f.ready = true;
       f.q.forEach(function (x) { raw(f, x); }); f.q = [];
       var b = $('#boot'); if (b) b.remove();
+    } else if (m.t === 'primed') {
+      frames[k].primed = true;
+    } else if (m.t === 'time') {
+      var fr = frames[k];
+      if (fr.primed && k === S.mod) { fr.lastT = m.ms; S.time = { ms: m.ms, src: k }; }
     } else if (m.t === 'place') {
       setPlace(m.place, k);
     } else if (m.t === 'go') {
       var place = m.place ? norm(m.place) : null, opt = m.opt;
       if (opt && opt.a3 && !place) place = capOf(opt.a3);
       if (place) setPlace(place, k);
+      if (m.time) S.time = { ms: m.time.ms, src: k };
       show(m.to, { place: place, time: m.time, opt: opt });
     }
   });
@@ -191,6 +203,8 @@
 
   /* ---------- درباره / نصب / آفلاین ---------- */
   var about = $('#about'), dip = null;
+  $('#ver').textContent = window.APP_VERSION || '';
+  $('#chg').innerHTML = (window.APP_CHANGES || []).map(function (c) { return '<h4>نسخهٔ <bdi dir="ltr">' + c.v + '</bdi></h4><ul>' + c.items.map(function (i) { return '<li>' + i + '</li>'; }).join('') + '</ul>'; }).join('');
   $('#bAbout').onclick = function () {
     closeSheet(); offlineStatus();
     $('#iosNote').hidden = !(/iphone|ipad|ipod/i.test(navigator.userAgent) && !navigator.standalone);
